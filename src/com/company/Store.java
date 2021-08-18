@@ -71,16 +71,14 @@ public class Store {
 
     public void getProductInfo(){
         System.out.println("\nWhat type of produce are you adding?: ");
+        System.out.println("Type: ");
         System.out.println("\t1. Fruit");
         System.out.println("\t2. Meat");
-        System.out.print("Type: ");
         int type = Input.getInt();
 
         System.out.println("Enter product name: ");
-        System.out.print("Name: ");
         String name = Input.getString();
         System.out.println("Enter product price (no decimals): ");
-        System.out.print("Price: ");
         int price = Input.getInt();
 
         switch(type){
