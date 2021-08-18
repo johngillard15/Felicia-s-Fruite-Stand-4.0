@@ -1,5 +1,6 @@
 package com.company;
 
+import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
 
@@ -25,7 +26,8 @@ public class Console {
             System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
             System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
             System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
-            System.out.printf("\t%d. SELL PRODUCT\n", ++listNum);
+            System.out.printf("\t%d. %s SELL PRODUCT\n",
+                    ++listNum, store.produce.size() == 0 ? ANSI.RED + "-NO INVENTORY-" + ANSI.RESET : "");
             System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
             System.out.printf("\t%d. EXIT\n", ++listNum);
 
@@ -33,7 +35,12 @@ public class Console {
                 case 1 -> viewProduce();
                 case 2 -> showStoreBalance();
                 case 3 -> addProduct();
-                case 4 -> sellProduct();
+                case 4 -> {
+                    if(store.produce.size() == 0)
+                        System.out.println("\nThere are no products to sell.");
+                    else
+                        sellProduct();
+                }
                 case 5 -> cleanInventory();
                 case 6 -> exit = true;
             }
