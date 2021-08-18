@@ -57,26 +57,7 @@ public class Console {
     }
 
     public void addProduct(){
-        System.out.println("\nWhat type of produce are you adding?: ");
-        System.out.println("\t1. Fruit");
-        System.out.println("\t2. Meat");
-        System.out.print("Type: ");
-        int type = Input.getInt();
-
-        System.out.println("Enter product name: ");
-        System.out.print("Name: ");
-        String name = Input.getString();
-        System.out.println("Enter product price (no decimals): ");
-        System.out.print("Price: ");
-        int price = Input.getInt();
-
-        switch(type){
-            case 1 -> store.addProduct(new Fruit(name, price));
-            case 2 -> store.addProduct(new Meat(name, price));
-        }
-
-        Product product = store.produce.get(store.produce.size() - 1);
-        System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
+        store.getProductInfo();
     }
 
     public void sellProduct(){
