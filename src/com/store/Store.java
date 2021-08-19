@@ -1,16 +1,20 @@
-package com.company;
+package com.store;
 
+import com.product.Fruit;
+import com.product.Meat;
+import com.product.Product;
 import com.utilities.Input;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class Store {
     public final String name;
     private final List<Product> produce = new ArrayList<>();
-    private int balance = 100000; // balance / 100 = true balance
+    private int balance = 1_000_00; // balance / 100 = true balance
     private static final double MARKUP = 0.3; // markup percentage for profits
+    //private static final double MARKUP_FRUIT = 0.3;
+    //private static final double MARKUP_MEAT = 0.3;
     //private static final String todaysDate = LocalDate.now().toString();
 
     public Store(){

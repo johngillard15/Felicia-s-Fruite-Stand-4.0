@@ -1,4 +1,4 @@
-package com.company;
+package com.store;
 
 public class Customer {
 }
