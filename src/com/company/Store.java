@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.Product;
 import com.utilities.Input;
 
 import java.util.ArrayList;
