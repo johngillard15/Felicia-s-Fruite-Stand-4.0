@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class Store {
     public final String name;
-    public final List<Product> produce = new ArrayList<>();
+    private final List<Product> produce = new ArrayList<>();
     private int balance = 100000; // balance / 100 = true balance
     private static final double MARKUP = 0.3; // markup percentage for profits
     //private static final String todaysDate = LocalDate.now().toString();
@@ -21,7 +21,19 @@ public class Store {
         this.name = name;
     }
 
-    public int getProduceQuantity(){
+    public Product getProduct(int index){
+        return produce.get(index);
+    }
+
+    public void removeProduct(int index){
+        produce.remove(index);
+    }
+
+    public void removeProduct(Product product){
+        produce.remove(product);
+    }
+
+    public int getInvSize(){
         return produce.size();
     }
 
