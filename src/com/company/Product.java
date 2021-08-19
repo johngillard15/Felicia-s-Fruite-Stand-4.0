@@ -6,7 +6,7 @@ public abstract class Product {
     public final String name;
     public final int price;
     //public final int quantity;
-    private Date expirationDate;
+    //private Date expirationDate;
 
     public Product(String name, int price){
         this.name = name;
