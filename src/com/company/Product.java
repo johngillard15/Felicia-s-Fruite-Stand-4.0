@@ -1,16 +1,22 @@
 package com.company;
 
-import java.util.Date;
-
 public abstract class Product {
-    public final String name;
-    public final int price;
+    private final String name;
+    private final int price;
     //public final int quantity;
-    //private Date expirationDate;
+    //protected String useBy;
 
     public Product(String name, int price){
         this.name = name;
         this.price = price;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public String getFormattedPrice(){
