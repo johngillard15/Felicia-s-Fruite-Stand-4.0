@@ -27,7 +27,7 @@ public class Console {
             System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
             System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
             System.out.printf("\t%d. %sSELL PRODUCT\n",
-                    ++listNum, store.produce.size() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
+                    ++listNum, store.getInvSize() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
             System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
             System.out.printf("\t%d. EXIT\n", ++listNum);
 
@@ -37,13 +37,13 @@ public class Console {
                 case 2 -> showStoreBalance();
                 case 3 -> addProduct();
                 case 4 -> {
-                    if(store.produce.size() == 0)
+                    if(store.getInvSize() == 0)
                         System.out.println("\nThere are no products to sell.");
                     else
                         sellProduct();
                 }
                 case 5 -> {
-                    if(store.produce.size() == 0)
+                    if(store.getInvSize() == 0)
                         System.out.println("\nThere are no products to discard.");
                     else
                         cleanInventory();
@@ -58,7 +58,7 @@ public class Console {
     }
 
     public void viewProduce(){
-        if(store.produce.size() == 0)
+        if(store.getInvSize() == 0)
             System.out.println("\nThere is no inventory to show.");
         else{
             System.out.println("\nShowing current inventory...");
@@ -75,9 +75,9 @@ public class Console {
 
         System.out.println("Select Product:");
         System.out.print("choice: ");
-        int choice = Input.getInt(store.getProduceQuantity());
+        int choice = Input.getInt(store.getInvSize());
 
-        Product product = store.produce.get(choice - 1);
+        Product product = store.getProduct(choice - 1);
         store.sellProduct(product);
 
         System.out.printf("\n%s successfully sold for $%s.\n", product.getName(), store.getMarkupPrice(product));
@@ -90,12 +90,12 @@ public class Console {
 
         System.out.println("Select Product:");
         System.out.print("choice: ");
-        int choice = Input.getInt(store.getProduceQuantity());
+        int choice = Input.getInt(store.getInvSize());
 
-        Product product = store.produce.get(choice - 1);
+        Product product = store.getProduct(choice - 1);
 
         System.out.printf("\n%s has been discarded.\n", product.getName());
-        store.produce.remove(product);
+        store.removeProduct(product);
     }
 
     public void showStoreBalance(){
