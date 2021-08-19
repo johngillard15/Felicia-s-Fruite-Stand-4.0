@@ -8,8 +8,8 @@ import java.util.List;
 public class Store {
     public final String name;
     public final List<Product> produce = new ArrayList<>();
-    private int balance = 1000000;
-    private static final double MARKUP = 0.3;
+    private int balance = 100000; // balance / 100 = true balance
+    private static final double MARKUP = 0.3; // markup percentage for profits
 
     public Store(){
         name = "Felicia's Fruit Stand";
@@ -25,18 +25,18 @@ public class Store {
 
     public void addProduct(Product product){
         produce.add(product);
-        withdraw(product.price);
+        withdraw(product.getPrice());
     }
 
     public void sellProduct(Product product){
-        int salePrice = (int) ((double)product.price * MARKUP) + product.price;
+        int salePrice = (int) ((double)product.getPrice() * MARKUP) + product.getPrice();
         deposit(salePrice);
 
         produce.remove(product);
     }
 
     public String getMarkupPrice(Product product){
-        int salePrice = (int) ((double)product.price * MARKUP) + product.price;
+        int salePrice = (int) ((double)product.getPrice() * MARKUP) + product.getPrice();
 
         return String.format("%,.2f", (double) salePrice / 100);
     }
@@ -87,6 +87,6 @@ public class Store {
 
         Product product = produce.get(produce.size() - 1);
 
-        System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
+        System.out.printf("\n%s successfully added for $%s.\n", product.getName(), product.getFormattedPrice());
     }
 }
