@@ -98,12 +98,12 @@ public class Store {
         System.out.print("choice: ");
         int type = Input.getInt(2);
 
-        System.out.println("\nEnter product name ");
+        System.out.println("\nEnter product name");
         System.out.print("product: ");
         String name = Input.getString();
-        System.out.println("Enter product price (no decimals): ");
+        System.out.println("Enter product price");
         System.out.print("price: ");
-        int price = Input.getInt();
+        double price = Input.getDouble();
 
         switch(type){
             case 1 -> {
@@ -112,7 +112,7 @@ public class Store {
                 System.out.println("\t2. Not in season");
                 System.out.print("choice: ");
                 boolean inSeason = Input.getInt(2) == 1;
-                addProduct(new Fruit(name, price, inSeason));
+                addProduct(new Fruit(name, (int) (price * 100), inSeason));
             }
 
             case 2 -> {
@@ -121,7 +121,7 @@ public class Store {
                 System.out.println("\t2. Not Frozen");
                 System.out.print("choice: ");
                 boolean isFrozen = Input.getInt(2) == 1;
-                addProduct(new Meat(name, price, isFrozen));
+                addProduct(new Meat(name, (int) (price * 100), isFrozen));
             }
         }
 
