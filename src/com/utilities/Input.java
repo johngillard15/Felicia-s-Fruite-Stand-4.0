@@ -13,7 +13,6 @@ public class Input {
 
         boolean validChoice;
         do{
-            System.out.print("choice: ");
             input = scan.nextLine();
 
             validChoice = InputValidator.validateInt(input) && Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= max;
