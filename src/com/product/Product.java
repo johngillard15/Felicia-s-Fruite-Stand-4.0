@@ -1,4 +1,4 @@
-package com.company;
+package com.product;
 
 public abstract class Product {
     private final String name;

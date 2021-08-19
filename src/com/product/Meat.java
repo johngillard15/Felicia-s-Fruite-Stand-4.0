@@ -1,4 +1,4 @@
-package com.company;
+package com.product;
 
 public class Meat extends Product{
     public boolean isFrozen;

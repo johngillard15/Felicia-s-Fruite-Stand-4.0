@@ -1,4 +1,4 @@
-package com.company;
+package com.product;
 
 public class Fruit extends Product{
     public boolean inSeason;
