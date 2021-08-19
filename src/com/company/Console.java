@@ -52,8 +52,12 @@ public class Console {
     }
 
     public void viewProduce(){
-        System.out.println("Showing current inventory...");
-        store.printProduce();
+        if(store.produce.size() == 0)
+            System.out.println("\nThere is no inventory to show.");
+        else{
+            System.out.println("\nShowing current inventory...");
+            store.printProduce();
+        }
     }
 
     public void addProduct(){
