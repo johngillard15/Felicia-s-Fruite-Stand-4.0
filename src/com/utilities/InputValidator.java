@@ -26,4 +26,14 @@ public class InputValidator {
         }
         return true;
     }
+
+    public static boolean validateDouble(String checkMe){
+        try{
+            Double.parseDouble(checkMe);
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
 }
