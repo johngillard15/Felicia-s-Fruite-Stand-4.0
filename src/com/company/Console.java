@@ -26,11 +26,12 @@ public class Console {
             System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
             System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
             System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
-            System.out.printf("\t%d. %s SELL PRODUCT\n",
-                    ++listNum, store.produce.size() == 0 ? ANSI.RED + "-NO INVENTORY-" + ANSI.RESET : "");
+            System.out.printf("\t%d. %sSELL PRODUCT\n",
+                    ++listNum, store.produce.size() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
             System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
             System.out.printf("\t%d. EXIT\n", ++listNum);
 
+            System.out.print("choice: ");
             switch(Input.getInt(listNum)){
                 case 1 -> viewProduce();
                 case 2 -> showStoreBalance();
@@ -41,11 +42,16 @@ public class Console {
                     else
                         sellProduct();
                 }
-                case 5 -> cleanInventory();
+                case 5 -> {
+                    if(store.produce.size() == 0)
+                        System.out.println("\nThere are no products to discard.");
+                    else
+                        cleanInventory();
+                }
                 case 6 -> exit = true;
             }
 
-            CLI.pause();
+            if(!exit) CLI.pause();
         }while(!exit);
 
         System.out.println("\nExiting cashier interface...");
@@ -68,19 +74,28 @@ public class Console {
         viewProduce();
 
         System.out.println("Select Product:");
-
+        System.out.print("choice: ");
         int choice = Input.getInt(store.getProduceQuantity());
 
         Product product = store.produce.get(choice - 1);
         store.sellProduct(product);
 
-        System.out.printf("\n%s successfully sold for $%s.\n", product.name, store.getMarkupPrice(product));
+        System.out.printf("\n%s successfully sold for $%s.\n", product.getName(), store.getMarkupPrice(product));
         showStoreBalance();
     }
 
     // (maybe?) iterate through produce and discard expired products
     public void cleanInventory(){
-        System.out.println("Clean?");
+        viewProduce();
+
+        System.out.println("Select Product:");
+        System.out.print("choice: ");
+        int choice = Input.getInt(store.getProduceQuantity());
+
+        Product product = store.produce.get(choice - 1);
+
+        System.out.printf("\n%s has been discarded.\n", product.getName());
+        store.produce.remove(product);
     }
 
     public void showStoreBalance(){
