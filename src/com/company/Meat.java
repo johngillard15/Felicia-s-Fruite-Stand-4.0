@@ -1,8 +1,10 @@
 package com.company;
 
 public class Meat extends Product{
+    public boolean isFrozen;
 
-    public Meat(String name, int price) {
-        super(name, price);
+    public Meat(String item, int amount, boolean isFrozen){
+        super(item, amount);
+        this.isFrozen = isFrozen;
     }
 }
