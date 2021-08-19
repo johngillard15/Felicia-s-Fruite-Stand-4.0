@@ -1,5 +1,7 @@
-package com.company;
+package com.console;
 
+import com.product.Product;
+import com.store.Store;
 import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
