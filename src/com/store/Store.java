@@ -29,10 +29,6 @@ public class Store {
         return produce.get(index);
     }
 
-    public void removeProduct(int index){
-        produce.remove(index);
-    }
-
     public void removeProduct(Product product){
         produce.remove(product);
     }
@@ -43,18 +39,18 @@ public class Store {
 
     public void addProduct(Product product){
         produce.add(product);
-        withdraw(product.getPrice());
+        withdraw(product.price);
     }
 
     public void sellProduct(Product product){
-        int salePrice = (int) ((double)product.getPrice() * MARKUP) + product.getPrice();
+        int salePrice = (int) ((double)product.price * MARKUP) + product.price;
         deposit(salePrice);
 
         produce.remove(product);
     }
 
     public String getMarkupPrice(Product product){
-        int salePrice = (int) ((double)product.getPrice() * MARKUP) + product.getPrice();
+        int salePrice = (int) ((double)product.price * MARKUP) + product.price;
 
         return String.format("%,.2f", (double) salePrice / 100);
     }
@@ -90,7 +86,7 @@ public class Store {
             else
                 typeSpecific = (((Meat) product).isFrozen ? typeSpecific : "fresh");
 
-            System.out.printf("\t%d. %s (%s) - $%s\n", ++listNum, product.getName(), typeSpecific, getMarkupPrice(product));
+            System.out.printf("\t%d. %s (%s) - $%s\n", ++listNum, product.name, typeSpecific, getMarkupPrice(product));
         }
     }
 
@@ -131,6 +127,6 @@ public class Store {
 
         Product product = produce.get(produce.size() - 1);
 
-        System.out.printf("\n%s successfully added for $%s.\n", product.getName(), product.getFormattedPrice());
+        System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
     }
 }

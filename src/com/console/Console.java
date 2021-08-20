@@ -82,7 +82,7 @@ public class Console {
         Product product = store.getProduct(choice - 1);
         store.sellProduct(product);
 
-        System.out.printf("\n%s successfully sold for $%s.\n", product.getName(), store.getMarkupPrice(product));
+        System.out.printf("\n%s successfully sold for $%s.\n", product.name, store.getMarkupPrice(product));
         showStoreBalance();
     }
 
@@ -96,7 +96,7 @@ public class Console {
 
         Product product = store.getProduct(choice - 1);
 
-        System.out.printf("\n%s has been discarded.\n", product.getName());
+        System.out.printf("\n%s has been discarded.\n", product.name);
         store.removeProduct(product);
     }
 
