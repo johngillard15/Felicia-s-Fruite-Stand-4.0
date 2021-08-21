@@ -6,8 +6,13 @@ import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 public class Console {
-    Store store;
+    private final Store store;
+    public static final LocalDate todaysDate = LocalDate.now();
 
     public Console(){
         store = new Store("Ye Olde Felicia's Fruite Stande");
@@ -23,6 +28,8 @@ public class Console {
         boolean exit = false;
         do{
             System.out.printf("\n\n~~~ %s ~~~\n", store.name);
+            String formattedDate = todaysDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+            System.out.printf("Today's date is %s\n", formattedDate);
 
             int listNum = 0;
             System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
@@ -30,6 +37,7 @@ public class Console {
             System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
             System.out.printf("\t%d. %sSELL PRODUCT\n",
                     ++listNum, store.getInvSize() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
+            System.out.printf("\t%d. SHRINK INVENTORY\n", ++listNum);
             System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
             System.out.printf("\t%d. EXIT\n", ++listNum);
 
@@ -48,9 +56,10 @@ public class Console {
                     if(store.getInvSize() == 0)
                         System.out.println("\nThere are no products to discard.");
                     else
-                        cleanInventory();
+                        shrinkInventory();
                 }
-                case 6 -> exit = true;
+                case 6 -> cleanInventory();
+                case 7 -> exit = true;
             }
 
             if(!exit) CLI.pause();
@@ -59,7 +68,7 @@ public class Console {
         System.out.println("\nExiting cashier interface...");
     }
 
-    public void viewProduce(){
+    private void viewProduce(){
         if(store.getInvSize() == 0)
             System.out.println("\nThere is no inventory to show.");
         else{
@@ -68,11 +77,11 @@ public class Console {
         }
     }
 
-    public void addProduct(){
-        store.getProductInfo();
+    private void addProduct(){
+        store.addNewItem();
     }
 
-    public void sellProduct(){
+    private void sellProduct(){
         viewProduce();
 
         System.out.println("Select Product:");
@@ -87,7 +96,7 @@ public class Console {
     }
 
     // (maybe?) iterate through produce and discard expired products
-    public void cleanInventory(){
+    private void shrinkInventory(){
         viewProduce();
 
         System.out.println("Select Product:");
@@ -98,6 +107,26 @@ public class Console {
 
         System.out.printf("\n%s has been discarded.\n", product.name);
         store.removeProduct(product);
+    }
+
+    private void cleanInventory(){
+        System.out.println("\nCleaning inventory...\n");
+
+        int itemsThrownOut = 0;
+
+        for(int i = 0; i < store.getInvSize(); i++){
+            Product product = store.getProduct(i);
+
+            if(store.isExpired(product)){
+                System.out.printf("%s expired on %s\n", product.name, product.useBy);
+
+                store.removeProduct(product);
+                ++itemsThrownOut;
+            }
+        }
+
+        System.out.printf("\n%s %s discarded.\n",
+                itemsThrownOut == 0 ? "No" : itemsThrownOut, itemsThrownOut == 1 ? "item was" : "items were");
     }
 
     public void showStoreBalance(){

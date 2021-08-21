@@ -3,8 +3,10 @@ package com.store;
 import com.product.Fruit;
 import com.product.Meat;
 import com.product.Product;
+import com.utilities.ANSI;
 import com.utilities.Input;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,6 @@ public class Store {
     private static final double MARKUP = 0.3; // markup percentage for profits
     //private static final double MARKUP_FRUIT = 0.3;
     //private static final double MARKUP_MEAT = 0.3;
-    //private static final String todaysDate = LocalDate.now().toString();
 
     public Store(){
         name = "Felicia's Fruit Stand";
@@ -86,11 +87,15 @@ public class Store {
             else
                 typeSpecific = (((Meat) product).isFrozen ? typeSpecific : "fresh");
 
-            System.out.printf("\t%d. %s (%s) - $%s\n", ++listNum, product.name, typeSpecific, getMarkupPrice(product));
+            String ANSI_COLOR = isExpired(product) ? ANSI.RED : "";
+            String useBy = ANSI_COLOR + product.useBy + ANSI.RESET;
+
+            System.out.printf("\t%d. %s (%s), use by: %s - $%s\n",
+                    ++listNum, product.name, typeSpecific, useBy, getMarkupPrice(product));
         }
     }
 
-    public void getProductInfo(){
+    public void addNewItem(){
         System.out.println("\nWhat type of produce are you adding? ");
         System.out.println("Type: ");
         System.out.println("\t1. Fruit");
@@ -105,6 +110,19 @@ public class Store {
         System.out.print("price: ");
         double price = Input.getDouble();
 
+        System.out.println("\nPlease enter thr product's expiration date");
+        System.out.print("Year (yyyy): ");
+        String thisYear = LocalDate.now().toString().split("-")[0];
+        String thisMonth = LocalDate.now().toString().split("-")[1];
+        String thisDay = LocalDate.now().toString().split("-")[2];
+        String year = Input.getString();
+        System.out.print("Month (MM): ");
+        String month = Input.getString();
+        System.out.print("Day (dd): ");
+        String day = Input.getString();
+
+        String useBy = String.format("%s-%s-%s", year, month, day);
+
         switch(type){
             case 1 -> {
                 System.out.printf("\nIs \"%s\" in season?\n", name);
@@ -112,7 +130,7 @@ public class Store {
                 System.out.println("\t2. Not in season");
                 System.out.print("choice: ");
                 boolean inSeason = Input.getInt(2) == 1;
-                addProduct(new Fruit(name, (int) (price * 100), inSeason));
+                addProduct(new Fruit(name, (int) (price * 100), useBy, inSeason));
             }
 
             case 2 -> {
@@ -121,12 +139,19 @@ public class Store {
                 System.out.println("\t2. Not Frozen");
                 System.out.print("choice: ");
                 boolean isFrozen = Input.getInt(2) == 1;
-                addProduct(new Meat(name, (int) (price * 100), isFrozen));
+                addProduct(new Meat(name, (int) (price * 100), useBy, isFrozen));
             }
         }
 
         Product product = produce.get(produce.size() - 1);
 
         System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
+    }
+
+    public boolean isExpired(Product product){
+        long epochDays = LocalDate.now().toEpochDay();
+        long productEpoch = LocalDate.parse(product.useBy).toEpochDay();
+
+        return productEpoch < epochDays;
     }
 }
