@@ -11,14 +11,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // TODO: finish getting selling large quantities
 // TODO: justify list output based on length of name
 public class Store {
+    private static final int INIT_BALANCE = 1_000_00;
     public final String name;
     private final List<Product> produce = new ArrayList<>();
     private int balance = 1_000_00; // balance / 100 = true balance
@@ -37,7 +35,13 @@ public class Store {
             File file = new File("inventory.txt");
             Scanner scan = new Scanner(file);
 
-            int savedBalance = Integer.parseInt(scan.nextLine());
+            int savedBalance;
+            try{
+                savedBalance = Integer.parseInt(scan.nextLine());
+            }
+            catch(NoSuchElementException e){
+                savedBalance = INIT_BALANCE;
+            }
 
             while(scan.hasNext()){
                 String type = scan.nextLine();
