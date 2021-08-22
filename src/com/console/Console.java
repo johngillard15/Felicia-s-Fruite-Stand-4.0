@@ -25,6 +25,8 @@ public class Console {
     public void menu(){
         System.out.println("Loading cashier interface...\n");
 
+        store.readInvFile();
+
         boolean exit = false;
         do{
             System.out.printf("\n\n~~~ %s ~~~\n", store.name);
@@ -66,6 +68,8 @@ public class Console {
         }while(!exit);
 
         System.out.println("\nExiting cashier interface...");
+
+        store.writeInvFile();
     }
 
     private void viewProduce(){

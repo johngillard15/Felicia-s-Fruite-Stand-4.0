@@ -1,0 +1,12 @@
+Meat
+Steak
+399
+2021-09-22
+3
+false
+Fruit
+Tomato
+129
+2021-11-17
+11
+false
