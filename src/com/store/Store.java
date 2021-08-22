@@ -44,19 +44,23 @@ public class Store {
     }
 
     public void sellProduct(Product product){
+        sellProduct(product, 1);
+    }
+
+    public void sellProduct(Product product, int saleQuantity){
         int salePrice = (int) ((double)product.price * MARKUP) + product.price;
-        deposit(salePrice);
+        deposit(salePrice * saleQuantity);
 
         if(product.getQuantity() == 1)
             produce.remove(product);
         else
-            decreaseStock(product);
+            decreaseStock(product, saleQuantity);
     }
 
-    public String getMarkupPrice(Product product){
+    public double getMarkupPrice(Product product){
         int salePrice = (int) ((double)product.price * MARKUP) + product.price;
 
-        return String.format("%,.2f", (double) salePrice / 100);
+        return (double) salePrice / 100;
     }
 
     public int getBalance(){
@@ -94,7 +98,7 @@ public class Store {
             String useBy = ANSI_COLOR + product.useBy + ANSI.RESET;
 
             double wholesale = (double)product.getQuantity() * (product.price/100 + (product.price/100) * MARKUP);
-            System.out.printf("\t%d. %s (%s), use by: %s - $%,.2f ($%s x%s)\n",
+            System.out.printf("\t%d. %s (%s), use by: %s - $%,.2f ($%,.2f x%s)\n",
                     ++listNum, product.name, typeSpecific, useBy, wholesale, getMarkupPrice(product),
                     product.getQuantity());
         }
