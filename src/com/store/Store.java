@@ -37,6 +37,8 @@ public class Store {
             File file = new File("inventory.txt");
             Scanner scan = new Scanner(file);
 
+            int savedBalance = Integer.parseInt(scan.nextLine());
+
             while(scan.hasNext()){
                 String type = scan.nextLine();
                 String name = scan.nextLine();
@@ -50,6 +52,8 @@ public class Store {
                 else
                     addProduct(new Meat(name, price, useBy, quantity, typeSpecific));
             }
+
+            balance = savedBalance;
         } catch (FileNotFoundException e){
             System.out.println("File not found.");
             e.printStackTrace();
@@ -69,6 +73,8 @@ public class Store {
 
         try{
             FileWriter fileWriter = new FileWriter("inventory.txt");
+
+            fileWriter.write(balance + "\n");
 
             for(Product product : produce){
                 String type = product.getClass().getSimpleName();
@@ -176,7 +182,7 @@ public class Store {
             String ANSI_COLOR = isExpired(product) ? ANSI.RED : "";
             String useBy = ANSI_COLOR + product.useBy + ANSI.RESET;
 
-            double wholesale = (double)product.getQuantity() * (product.price/100 + (product.price/100) * MARKUP);
+            double wholesale = (double)product.getQuantity() * ((double)product.price/100 + ((double)product.price/100) * MARKUP);
             System.out.printf("\t%d. %s (%s), use by: %s - $%,.2f ($%,.2f x%s)\n",
                     ++listNum, product.name, typeSpecific, useBy, wholesale, getMarkupPrice(product),
                     product.getQuantity());
