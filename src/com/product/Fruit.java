@@ -7,4 +7,9 @@ public class Fruit extends Product{
         super(item, amount, useBy);
         this.inSeason = inSeason;
     }
+
+    public Fruit(String item, int amount, String useBy, int quantity, boolean inSeason){
+        super(item, amount, useBy, quantity);
+        this.inSeason = inSeason;
+    }
 }

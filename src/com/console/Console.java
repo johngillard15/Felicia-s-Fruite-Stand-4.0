@@ -126,7 +126,7 @@ public class Console {
         }
 
         System.out.printf("\n%s %s discarded.\n",
-                itemsThrownOut == 0 ? "No" : itemsThrownOut, itemsThrownOut == 1 ? "item was" : "items were");
+                itemsThrownOut, itemsThrownOut == 1 ? "item was" : "items were");
     }
 
     public void showStoreBalance(){

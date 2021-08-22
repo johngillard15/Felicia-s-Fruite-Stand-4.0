@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: finish getting selling large quantities
+// TODO: justify list output based on length of name
 public class Store {
     public final String name;
     private final List<Product> produce = new ArrayList<>();
     private int balance = 1_000_00; // balance / 100 = true balance
     private static final double MARKUP = 0.3; // markup percentage for profits
-    //private static final double MARKUP_FRUIT = 0.3;
-    //private static final double MARKUP_MEAT = 0.3;
 
     public Store(){
         name = "Felicia's Fruit Stand";
@@ -90,8 +90,10 @@ public class Store {
             String ANSI_COLOR = isExpired(product) ? ANSI.RED : "";
             String useBy = ANSI_COLOR + product.useBy + ANSI.RESET;
 
-            System.out.printf("\t%d. %s (%s), use by: %s - $%s\n",
-                    ++listNum, product.name, typeSpecific, useBy, getMarkupPrice(product));
+            double wholesale = (double)product.getQuantity() * (product.price/100 + (product.price/100) * MARKUP);
+            System.out.printf("\t%d. %s (%s), use by: %s - $%,.2f ($%s x%s)\n",
+                    ++listNum, product.name, typeSpecific, useBy, wholesale, getMarkupPrice(product),
+                    product.getQuantity());
         }
     }
 
@@ -110,11 +112,12 @@ public class Store {
         System.out.print("price: ");
         double price = Input.getDouble();
 
+        System.out.println("\nEnter quantity to add:");
+        System.out.print("quantity: ");
+        int quantity = Input.getInt();
+
         System.out.println("\nPlease enter thr product's expiration date");
         System.out.print("Year (yyyy): ");
-        String thisYear = LocalDate.now().toString().split("-")[0];
-        String thisMonth = LocalDate.now().toString().split("-")[1];
-        String thisDay = LocalDate.now().toString().split("-")[2];
         String year = Input.getString();
         System.out.print("Month (MM): ");
         String month = Input.getString();
@@ -130,7 +133,7 @@ public class Store {
                 System.out.println("\t2. Not in season");
                 System.out.print("choice: ");
                 boolean inSeason = Input.getInt(2) == 1;
-                addProduct(new Fruit(name, (int) (price * 100), useBy, inSeason));
+                addProduct(new Fruit(name, (int) (price * 100), useBy, quantity, inSeason));
             }
 
             case 2 -> {
@@ -139,13 +142,20 @@ public class Store {
                 System.out.println("\t2. Not Frozen");
                 System.out.print("choice: ");
                 boolean isFrozen = Input.getInt(2) == 1;
-                addProduct(new Meat(name, (int) (price * 100), useBy, isFrozen));
+                addProduct(new Meat(name, (int) (price * 100), useBy, quantity, isFrozen));
             }
         }
 
         Product product = produce.get(produce.size() - 1);
 
         System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
+    }
+
+    private void decreaseStock(Product product){
+        decreaseStock(product, 1);
+    }
+    private void decreaseStock(Product product, int amount){
+        product.setQuantity(product.getQuantity() - amount);
     }
 
     public boolean isExpired(Product product){

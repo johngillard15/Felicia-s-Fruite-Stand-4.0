@@ -7,4 +7,9 @@ public class Meat extends Product{
         super(item, amount, useBy);
         this.isFrozen = isFrozen;
     }
+
+    public Meat(String item, int amount, String useBy, int quantity, boolean isFrozen){
+        super(item, amount, useBy, quantity);
+        this.isFrozen = isFrozen;
+    }
 }
