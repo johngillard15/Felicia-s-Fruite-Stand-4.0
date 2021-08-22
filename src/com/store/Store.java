@@ -40,14 +40,17 @@ public class Store {
 
     public void addProduct(Product product){
         produce.add(product);
-        withdraw(product.price);
+        withdraw(product.price * product.getQuantity());
     }
 
     public void sellProduct(Product product){
         int salePrice = (int) ((double)product.price * MARKUP) + product.price;
         deposit(salePrice);
 
-        produce.remove(product);
+        if(product.getQuantity() == 1)
+            produce.remove(product);
+        else
+            decreaseStock(product);
     }
 
     public String getMarkupPrice(Product product){
