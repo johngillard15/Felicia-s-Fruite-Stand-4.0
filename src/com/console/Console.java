@@ -92,6 +92,7 @@ public class Console {
                 savedBalance = Integer.parseInt(scan.nextLine());
             }
             catch(NoSuchElementException e){
+                scan.nextLine();
                 savedBalance = INIT_BALANCE;
             }
 
@@ -143,7 +144,7 @@ public class Console {
                 else
                     typeSpecific = ((Meat) product).isFrozen;
 
-                fileWriter.write(String.format("%s\n%s\n%s\n%s\n%s\n%s",
+                fileWriter.write(String.format("%s\n%s\n%s\n%s\n%s\n%s\n",
                         type, product.name, product.price, product.useBy, product.getQuantity(), typeSpecific));
             }
 
