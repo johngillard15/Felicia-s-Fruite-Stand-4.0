@@ -6,6 +6,7 @@ public class Input {
     private static final Scanner scan = new Scanner(System.in);
 
     public static String getString(){
+        System.out.print("-> ");
         return scan.nextLine();
     }
 
@@ -17,6 +18,7 @@ public class Input {
 
         boolean validChoice;
         do{
+            System.out.print("-> ");
             input = scan.nextLine();
 
             validChoice = InputValidator.validateInt(input) && Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= max;
@@ -33,6 +35,7 @@ public class Input {
 
         boolean validChoice;
         do{
+            System.out.print("-> ");
             input = scan.nextLine();
 
             validChoice = InputValidator.validateDouble(input) && Double.parseDouble(input) >= 1 && Double.parseDouble(input) <= max;
