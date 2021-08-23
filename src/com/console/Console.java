@@ -52,7 +52,7 @@ public class Console {
             System.out.printf("\t%d. EXIT\n", ++listNum);
 
             System.out.print("choice: ");
-            switch(Input.getInt(listNum)){
+            switch(Input.getInt(1, listNum)){
                 case 1 -> viewProduce();
                 case 2 -> showStoreBalance();
                 case 3 -> addProduct();
@@ -175,7 +175,7 @@ public class Console {
 
         System.out.println("Select Product:");
         System.out.print("choice: ");
-        int choice = Input.getInt(store.getInvSize());
+        int choice = Input.getInt(1, store.getInvSize());
 
         Product product = store.getProduct(choice - 1);
 
@@ -197,7 +197,7 @@ public class Console {
 
         System.out.println("Select Product:");
         System.out.print("choice: ");
-        int choice = Input.getInt(store.getInvSize());
+        int choice = Input.getInt(1, store.getInvSize());
 
         Product product = store.getProduct(choice - 1);
 
