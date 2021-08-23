@@ -1,4 +1,4 @@
-95390
+87173
 Fruit
 Tomato
 129
@@ -22,4 +22,10 @@ Brisket
 599
 1983-02-23
 2
+false
+Fruit
+Banana
+83
+2021-09-22
+99
 false
