@@ -109,18 +109,18 @@ public class Store {
         System.out.println("\t1. Fruit");
         System.out.println("\t2. Meat");
         System.out.print("choice: ");
-        int type = Input.getInt(2);
+        int type = Input.getInt(1,2);
 
         System.out.println("\nEnter product name");
         System.out.print("product: ");
         String name = Input.getString();
         System.out.println("Enter product price");
         System.out.print("price: ");
-        double price = Input.getDouble();
+        double price = Input.getDouble(0);
 
         System.out.println("\nEnter quantity to add:");
         System.out.print("quantity: ");
-        int quantity = Input.getInt();
+        int quantity = Input.getInt(0);
 
         System.out.println("\nPlease enter thr product's expiration date");
         System.out.print("Year (yyyy): ");
@@ -138,7 +138,7 @@ public class Store {
                 System.out.println("\t1. In season");
                 System.out.println("\t2. Not in season");
                 System.out.print("choice: ");
-                boolean inSeason = Input.getInt(2) == 1;
+                boolean inSeason = Input.getInt(1,2) == 1;
                 addProduct(new Fruit(name, (int) (price * 100), useBy, quantity, inSeason));
             }
 
@@ -147,7 +147,7 @@ public class Store {
                 System.out.println("\t1. Frozen");
                 System.out.println("\t2. Not Frozen");
                 System.out.print("choice: ");
-                boolean isFrozen = Input.getInt(2) == 1;
+                boolean isFrozen = Input.getInt(1, 2) == 1;
                 addProduct(new Meat(name, (int) (price * 100), useBy, quantity, isFrozen));
             }
         }
