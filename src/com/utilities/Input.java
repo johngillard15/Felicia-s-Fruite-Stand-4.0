@@ -11,9 +11,12 @@ public class Input {
     }
 
     public static int getInt(){
-        return getInt(Integer.MAX_VALUE);
+        return getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
-    public static int getInt(int max){
+    public static int getInt(final int MIN){
+        return getInt(MIN, Integer.MAX_VALUE);
+    }
+    public static int getInt(final double MIN, final double MAX){
         String input;
 
         boolean validChoice;
@@ -21,16 +24,20 @@ public class Input {
             System.out.print("-> ");
             input = scan.nextLine();
 
-            validChoice = InputValidator.validateInt(input) && Integer.parseInt(input) >= 1 && Integer.parseInt(input) <= max;
+            validChoice =
+                    InputValidator.validInt(input) && (Integer.parseInt(input) >= MIN && Integer.parseInt(input) <= MAX);
         }while(!validChoice);
 
         return Integer.parseInt(input);
     }
 
     public static double getDouble(){
-        return getDouble(Double.MAX_VALUE);
+        return getDouble(Double.MIN_VALUE, Double.MAX_VALUE);
     }
-    public static Double getDouble(double max){
+    public static double getDouble(final double MIN){
+        return getDouble(MIN, Double.MAX_VALUE);
+    }
+    public static Double getDouble(final double MIN, final double MAX){
         String input;
 
         boolean validChoice;
@@ -38,7 +45,8 @@ public class Input {
             System.out.print("-> ");
             input = scan.nextLine();
 
-            validChoice = InputValidator.validateDouble(input) && Double.parseDouble(input) >= 1 && Double.parseDouble(input) <= max;
+            validChoice =
+                    InputValidator.validDouble(input) && (Double.parseDouble(input) >= MIN && Double.parseDouble(input) <= MAX);
         }while(!validChoice);
 
         return Double.parseDouble(input);
