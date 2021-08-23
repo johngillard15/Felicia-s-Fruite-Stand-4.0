@@ -30,6 +30,56 @@ public class Console {
         store = new Store(storeName);
     }
 
+    public void menu(){
+        System.out.println("Loading cashier interface...\n");
+
+        readInvFile();
+
+        boolean exit = false;
+        do{
+            System.out.printf("\n\n~~~ %s ~~~\n", store.name);
+            String formattedDate = todaysDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+            System.out.printf("Today's date is %s\n", formattedDate);
+
+            int listNum = 0;
+            System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
+            System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
+            System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
+            System.out.printf("\t%d. %sSELL PRODUCT\n",
+                    ++listNum, store.getInvSize() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
+            System.out.printf("\t%d. SHRINK INVENTORY\n", ++listNum);
+            System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
+            System.out.printf("\t%d. EXIT\n", ++listNum);
+
+            System.out.print("choice: ");
+            switch(Input.getInt(listNum)){
+                case 1 -> viewProduce();
+                case 2 -> showStoreBalance();
+                case 3 -> addProduct();
+                case 4 -> {
+                    if(store.getInvSize() == 0)
+                        System.out.println("\nThere are no products to sell.");
+                    else
+                        sellProduct();
+                }
+                case 5 -> {
+                    if(store.getInvSize() == 0)
+                        System.out.println("\nThere are no products to discard.");
+                    else
+                        shrinkInventory();
+                }
+                case 6 -> cleanInventory();
+                case 7 -> exit = true;
+            }
+
+            if(!exit) CLI.pause();
+        }while(!exit);
+
+        System.out.println("\nExiting cashier interface...");
+
+        writeInvFile();
+    }
+
     public void readInvFile(){
         final int INIT_BALANCE = 1_000_00;
 
@@ -93,21 +143,8 @@ public class Console {
                 else
                     typeSpecific = ((Meat) product).isFrozen;
 
-                fileWriter.write(String.format("""
-                                %s
-                                %s
-                                %s
-                                %s
-                                %s
-                                %s
-                                """,
-                        type,
-                        product.name,
-                        product.price,
-                        product.useBy,
-                        product.getQuantity(),
-                        typeSpecific)
-                );
+                fileWriter.write(String.format("%s\n%s\n%s\n%s\n%s\n%s",
+                        type, product.name, product.price, product.useBy, product.getQuantity(), typeSpecific));
             }
 
             fileWriter.flush();
@@ -117,56 +154,6 @@ public class Console {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-    }
-
-    public void menu(){
-        System.out.println("Loading cashier interface...\n");
-
-        readInvFile();
-
-        boolean exit = false;
-        do{
-            System.out.printf("\n\n~~~ %s ~~~\n", store.name);
-            String formattedDate = todaysDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
-            System.out.printf("Today's date is %s\n", formattedDate);
-
-            int listNum = 0;
-            System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
-            System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
-            System.out.printf("\t%d. %sSELL PRODUCT\n",
-                    ++listNum, store.getInvSize() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
-            System.out.printf("\t%d. SHRINK INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. EXIT\n", ++listNum);
-
-            System.out.print("choice: ");
-            switch(Input.getInt(listNum)){
-                case 1 -> viewProduce();
-                case 2 -> showStoreBalance();
-                case 3 -> addProduct();
-                case 4 -> {
-                    if(store.getInvSize() == 0)
-                        System.out.println("\nThere are no products to sell.");
-                    else
-                        sellProduct();
-                }
-                case 5 -> {
-                    if(store.getInvSize() == 0)
-                        System.out.println("\nThere are no products to discard.");
-                    else
-                        shrinkInventory();
-                }
-                case 6 -> cleanInventory();
-                case 7 -> exit = true;
-            }
-
-            if(!exit) CLI.pause();
-        }while(!exit);
-
-        System.out.println("\nExiting cashier interface...");
-
-        writeInvFile();
     }
 
     private void viewProduce(){
