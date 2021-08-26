@@ -181,12 +181,12 @@ public class Console {
 
         System.out.printf("\nHow many \"%s\" would you like to sell?\n", product.name);
         System.out.print("quantity: ");
-        int saleQuantity = Input.getInt(product.getQuantity());
+        int saleQuantity = Input.getInt(1, product.getQuantity());
 
         store.sellProduct(product, saleQuantity);
 
         System.out.printf("\n%d %s successfully sold for $%,.2f.\n",
-                saleQuantity, product.name, store.getMarkupPrice(product) * product.getQuantity());
+                saleQuantity, product.name, store.getMarkupPrice(product) * saleQuantity);
 
         showStoreBalance();
     }
