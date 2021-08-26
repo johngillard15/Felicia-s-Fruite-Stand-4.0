@@ -16,7 +16,7 @@ public class Input {
     public static int getInt(final int MIN){
         return getInt(MIN, Integer.MAX_VALUE);
     }
-    public static int getInt(final double MIN, final double MAX){
+    public static int getInt(final int MIN, final int MAX){
         String input;
 
         boolean validChoice;
@@ -26,6 +26,13 @@ public class Input {
 
             validChoice =
                     InputValidator.validInt(input) && (Integer.parseInt(input) >= MIN && Integer.parseInt(input) <= MAX);
+
+            if(!InputValidator.validInt(input))
+                System.out.println("That is not a valid number value. Please try again");
+            else if(MIN != Integer.MIN_VALUE && !(Integer.parseInt(input) >= MIN))
+                System.out.println("Value must be greater than or equal to " + MIN);
+            else if(MAX != Integer.MAX_VALUE && !(Integer.parseInt(input) <= MAX))
+                System.out.println("Value must be less than or equal to " + MAX);
         }while(!validChoice);
 
         return Integer.parseInt(input);
