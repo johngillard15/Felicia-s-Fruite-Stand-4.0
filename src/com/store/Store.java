@@ -120,7 +120,7 @@ public class Store {
 
         System.out.println("\nEnter quantity to add:");
         System.out.print("quantity: ");
-        int quantity = Input.getInt(0);
+        int quantity = Input.getInt(1);
 
         System.out.println("\nPlease enter thr product's expiration date");
         System.out.print("Year (yyyy): ");
