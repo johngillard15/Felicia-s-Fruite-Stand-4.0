@@ -18,13 +18,9 @@ import java.util.*;
 // TODO: justify list output based on length of name
 public class Store {
     public final String name;
-    public List<Product> produce = new ArrayList<>();
+    private List<Product> produce = new ArrayList<>();
     private int balance = 1_000_00; // balance / 100 = true balance
     private static final double MARKUP = 0.3; // markup percentage for profits
-
-    public Store(){
-        name = "Felicia's Fruit Stand";
-    }
 
     public Store(String name){
         this.name = name;
