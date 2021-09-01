@@ -7,14 +7,13 @@ import com.store.Store;
 import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
+import com.utilities.FileHandling;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -84,6 +83,16 @@ public class Console {
         final int INIT_BALANCE = 1_000_00;
 
         try{
+            File file = new File("object.txt");
+            if(file.createNewFile())
+                FileHandling.write(store.produce);
+        }
+        catch(IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try{
             File file = new File("inventory.txt");
             Scanner scan = new Scanner(file);
 
@@ -91,24 +100,11 @@ public class Console {
             try{
                 savedBalance = Integer.parseInt(scan.nextLine());
             }
-            catch(NoSuchElementException e){
-                scan.nextLine();
+            catch(NoSuchElementException | NumberFormatException e){
                 savedBalance = INIT_BALANCE;
             }
 
-            while(scan.hasNext()){
-                String type = scan.nextLine();
-                String name = scan.nextLine();
-                int price = Integer.parseInt(scan.nextLine());
-                String useBy = scan.nextLine();
-                int quantity = Integer.parseInt(scan.nextLine());
-                boolean typeSpecific = Boolean.parseBoolean(scan.nextLine());
-
-                if(type.equals("Fruit"))
-                    store.addProduct(new Fruit(name, price, useBy, quantity, typeSpecific));
-                else
-                    store.addProduct(new Meat(name, price, useBy, quantity, typeSpecific));
-            }
+            store.produce = (ArrayList<Product>) FileHandling.read();
 
             store.setBalance(savedBalance);
         } catch (FileNotFoundException e){
@@ -129,27 +125,21 @@ public class Console {
         }
 
         try{
-            FileWriter fileWriter = new FileWriter("inventory.txt");
+            File file = new File("object.txt");
+            if(file.delete())
+                file.createNewFile();
+        }
+        catch(IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
 
-            fileWriter.write(store.getBalance() + "\n");
+        try(PrintWriter pw = new PrintWriter("inventory.txt")){
+            pw.print(store.getBalance());
+            pw.flush();
+            pw.close();
 
-            for(int i = 0; i < store.getInvSize(); i++){
-                Product product = store.getProduct(i);
-
-                String type = product.getClass().getSimpleName();
-                boolean typeSpecific;
-
-                if(product instanceof Fruit)
-                    typeSpecific = ((Fruit) product).inSeason;
-                else
-                    typeSpecific = ((Meat) product).isFrozen;
-
-                fileWriter.write(String.format("%s\n%s\n%s\n%s\n%s\n%s\n",
-                        type, product.name, product.price, product.useBy, product.getQuantity(), typeSpecific));
-            }
-
-            fileWriter.flush();
-            fileWriter.close();
+            FileHandling.write(store.produce);
         }
         catch(IOException e){
             System.out.println("An error occurred.");
