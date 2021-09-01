@@ -6,13 +6,12 @@ public class FileHandling {
 
     public static void write(Object obj){
         try{
-            FileOutputStream writeData = new FileOutputStream("object.txt");
-            ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+            FileOutputStream data = new FileOutputStream("object.txt");
+            ObjectOutputStream writeStream = new ObjectOutputStream(data);
 
             writeStream.writeObject(obj);
             writeStream.flush();
             writeStream.close();
-
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,8 +21,8 @@ public class FileHandling {
         Object obj = null;
 
         try{
-            FileInputStream readData = new FileInputStream("object.txt");
-            ObjectInputStream readStream = new ObjectInputStream(readData);
+            FileInputStream data = new FileInputStream("object.txt");
+            ObjectInputStream readStream = new ObjectInputStream(data);
 
             obj = readStream.readObject();
             readStream.close();
