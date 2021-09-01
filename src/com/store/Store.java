@@ -6,6 +6,7 @@ import com.product.Product;
 import com.utilities.ANSI;
 import com.utilities.FileHandling;
 import com.utilities.Input;
+import com.utilities.UI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -153,24 +154,23 @@ public class Store {
     }
 
     public void printProduce(){
-        System.out.println("\n~ List of Produce ~");
-        int listNum = 0;
-        for(Product product : produce){
-            String typeSpecific = product instanceof Fruit ? "in season" : "frozen";
+        String[] produceInfo = new String[produce.size()];
 
-            if(product instanceof Fruit)
-                typeSpecific = (((Fruit) product).inSeason ? "" : "not ") + typeSpecific;
-            else
-                typeSpecific = (((Meat) product).isFrozen ? typeSpecific : "fresh");
+        for(int i = 0; i < produce.size(); i++){
+            Product product = produce.get(i);
 
             String ANSI_COLOR = isExpired(product) ? ANSI.RED : "";
             String useBy = ANSI_COLOR + product.useBy + ANSI.RESET;
 
             double wholesale = (double)product.getQuantity() * ((double)product.price/100 + ((double)product.price/100) * MARKUP);
-            System.out.printf("\t%d. %s (%s), use by: %s - $%,.2f ($%,.2f x%s)\n",
-                    ++listNum, product.name, typeSpecific, useBy, wholesale, getMarkupPrice(product),
-                    product.getQuantity());
+
+            produceInfo[i] = String.format("%s, use by: %s\n" +
+                            "\twholesale: $%,.2f ($%,.2f x%s)",
+                    product, useBy,
+                    wholesale, getMarkupPrice(product), product.getQuantity());
         }
+
+        UI.listerator("\n~ List of Produce ~", produceInfo);
     }
 
     public void addNewItem(){
@@ -184,6 +184,7 @@ public class Store {
         System.out.println("\nEnter product name");
         System.out.print("product: ");
         String name = Input.getString();
+
         System.out.println("Enter product price");
         System.out.print("price: ");
         double price = Input.getDouble(0);
