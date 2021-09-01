@@ -13,43 +13,11 @@ public class UI { // TODO: make different listing methods (bullet points, letter
                     System.out.printf("%d. %s\n", ++listNum, option);
                 }
             }
-            case 2 -> { // letter TODO: maybe have array that will store chars, then iterate through it backwards to print list
-                /*
-                char[] charArr = new char[listElements.length];
-                charArr[0] = 'a';
-                String listValue = charArr[0];
-
-                String getListValue(){
-                    String newValue = "";
-                    for(int i = 0; i < charArr.length; i++){
-                        if(charArr[i] >= 'z' && (i + 1 != charArr.length)){
-                            charArr[i] = 'a';
-                            ++charArr[i + 1];
-                        }
-                        else
-                            ++charArr[i];
-
-                        newValue += charArr[i];
-                    }
-
-                    return newValue;
-                }
-
-                for(String option : listElements){
-                    listValue = getListValue();
-                    System.out.printf("%c. %s\n", listValue, option);
-                }
-                */
+            case 2 -> { // letter
                 char c = 'a';
                 for(String option : listElements){
                     System.out.printf("%c. %s\n", ++c, option);
                 }
-            }
-            case 3 -> { // numeral
-
-            }
-            case 4 -> { // bullet
-
             }
 
             default ->{

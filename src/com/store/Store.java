@@ -21,7 +21,7 @@ public class Store {
     public final String name;
     private List<Product> produce = new ArrayList<>();
     private int balance = 1_000_00; // balance / 100 = true balance
-    private static final double MARKUP = 0.3; // markup percentage for profits
+    private static final double MARKUP = 0.3D; // markup percentage for profits
     public static final String[] productTypes = {
             "Fruit",
             "Meat"
