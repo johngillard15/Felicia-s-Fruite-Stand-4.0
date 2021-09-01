@@ -30,9 +30,9 @@ public class Console {
     }
 
     public void menu(){
-        System.out.println("Loading cashier interface...\n");
+        store.readInvFile();
 
-        readInvFile();
+        System.out.println("Loading cashier interface...\n");
 
         boolean exit = false;
         do{
@@ -76,75 +76,7 @@ public class Console {
 
         System.out.println("\nExiting cashier interface...");
 
-        writeInvFile();
-    }
-
-    public void readInvFile(){
-        final int INIT_BALANCE = 1_000_00;
-
-        try{
-            File file = new File("object.txt");
-            if(file.createNewFile())
-                FileHandling.write(store.produce);
-        }
-        catch(IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        try{
-            File file = new File("inventory.txt");
-            Scanner scan = new Scanner(file);
-
-            int savedBalance;
-            try{
-                savedBalance = Integer.parseInt(scan.nextLine());
-            }
-            catch(NoSuchElementException | NumberFormatException e){
-                savedBalance = INIT_BALANCE;
-            }
-
-            store.produce = (ArrayList<Product>) FileHandling.read();
-
-            store.setBalance(savedBalance);
-        } catch (FileNotFoundException e){
-            System.out.println("File not found.");
-            e.printStackTrace();
-        }
-    }
-
-    public void writeInvFile(){
-        try{
-            File file = new File("inventory.txt");
-            if(file.delete())
-                file.createNewFile();
-        }
-        catch(IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        try{
-            File file = new File("object.txt");
-            if(file.delete())
-                file.createNewFile();
-        }
-        catch(IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        try(PrintWriter pw = new PrintWriter("inventory.txt")){
-            pw.print(store.getBalance());
-            pw.flush();
-            pw.close();
-
-            FileHandling.write(store.produce);
-        }
-        catch(IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        store.writeInvFile();
     }
 
     private void viewProduce(){
