@@ -209,18 +209,16 @@ public class Store {
         switch(type){
             case 1 -> {
                 System.out.printf("\nIs \"%s\" in season?\n", name);
-                System.out.println("\t1. In season");
-                System.out.println("\t2. Not in season");
-                System.out.print("choice: ");
+                UI.listerator("In season", "Not in season");
+                System.out.print("choice ");
                 boolean inSeason = Input.getInt(1,2) == 1;
                 addProduct(new Fruit(name, (int) (price * 100), useBy, quantity, inSeason));
             }
 
             case 2 -> {
                 System.out.printf("Is %s frozen?\n", name);
-                System.out.println("\t1. Frozen");
-                System.out.println("\t2. Not Frozen");
-                System.out.print("choice: ");
+                UI.listerator("Frozen", "Fresh");
+                System.out.print("choice ");
                 boolean isFrozen = Input.getInt(1, 2) == 1;
                 addProduct(new Meat(name, (int) (price * 100), useBy, quantity, isFrozen));
             }
