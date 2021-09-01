@@ -61,7 +61,11 @@ public class Console {
                         shrinkInventory();
                 }
                 case 6 -> cleanInventory();
-                case 7 -> exit = true;
+                case 7 -> {
+                    System.out.println("\nAre you sure you want to exit? (y/n)");
+                    if(Input.getString(false, "y", "n").equalsIgnoreCase("y"))
+                        exit = true;
+                }
             }
 
             if(!exit) CLI.pause();
