@@ -5,6 +5,7 @@ import com.store.Store;
 import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
+import com.utilities.UI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,15 @@ import java.time.format.FormatStyle;
 public class Console {
     private final Store store;
     public static final LocalDate todaysDate = LocalDate.now();
+    public static final String[] consoleOptions = {
+            "CHECK INVENTORY",
+            "SHOW STORE BALANCE",
+            "ADD PRODUCT",
+            "SELL PRODUCT",
+            "SHRINK INVENTORY",
+            "CLEAN INVENTORY",
+            "EXIT"
+    };
 
     public Console(){
         store = new Store("Ye Olde Felicia's Fruite Stande");
@@ -33,18 +43,10 @@ public class Console {
             String formattedDate = todaysDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
             System.out.printf("Today's date is %s\n", formattedDate);
 
-            int listNum = 0;
-            System.out.printf("\t%d. CHECK INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. SHOW STORE BALANCE\n", ++listNum);
-            System.out.printf("\t%d. ADD PRODUCT\n", ++listNum);
-            System.out.printf("\t%d. %sSELL PRODUCT\n",
-                    ++listNum, store.getInvSize() == 0 ? ANSI.RED + "-NO INVENTORY- " + ANSI.RESET : "");
-            System.out.printf("\t%d. SHRINK INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. CLEAN INVENTORY\n", ++listNum);
-            System.out.printf("\t%d. EXIT\n", ++listNum);
+            UI.listerator(consoleOptions);
 
             System.out.print("choice: ");
-            switch(Input.getInt(1, listNum)){
+            switch(Input.getInt(1, consoleOptions.length)){
                 case 1 -> viewProduce();
                 case 2 -> showStoreBalance();
                 case 3 -> addProduct();
