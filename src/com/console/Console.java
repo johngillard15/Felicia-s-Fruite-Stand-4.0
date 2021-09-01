@@ -1,21 +1,14 @@
 package com.console;
 
-import com.product.Fruit;
-import com.product.Meat;
 import com.product.Product;
 import com.store.Store;
 import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
-import com.utilities.FileHandling;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Console {
     private final Store store;
