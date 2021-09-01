@@ -7,7 +7,7 @@ public class UI { // TODO: make different listing methods (bullet points, letter
     }
 
     /**
-     * <p>1 = number, 2, letter</p>
+     * <p>1 = number, 2 = letter</p>
      * <p>subLevel refers to the level of indentation before each list element</p>
      * @param listType
      * @param subLevel
@@ -32,9 +32,7 @@ public class UI { // TODO: make different listing methods (bullet points, letter
                 }
             }
 
-            default ->{
-                throw new IllegalStateException("Invalid list type: " + listType);
-            }
+            default -> throw new IllegalStateException("Invalid list type: " + listType);
         }
     }
 }
