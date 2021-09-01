@@ -1,6 +1,8 @@
 package com.product;
 
-public abstract class Product {
+import java.io.Serializable;
+
+public abstract class Product implements Serializable {
     public final String name;
     public final int price;
     public final String useBy;
