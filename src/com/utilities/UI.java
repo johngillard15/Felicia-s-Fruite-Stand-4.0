@@ -5,14 +5,6 @@ public class UI { // TODO: make different listing methods (bullet points, letter
     public static void listerator(String... listElements){
         listerator(1, listElements);
     }
-    public static void listerator(String prompt, String... listElements){
-        System.out.println(prompt);
-        listerator(listElements);
-    }
-    public static void listerator(int listType, String prompt, String... listElements){
-        System.out.println(prompt);
-        listerator(listType, listElements);
-    }
     public static void listerator(int listType, String... listElements){
         switch(listType){
             case 1 -> { // number

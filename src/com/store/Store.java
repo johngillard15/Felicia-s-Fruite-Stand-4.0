@@ -22,6 +22,10 @@ public class Store {
     private List<Product> produce = new ArrayList<>();
     private int balance = 1_000_00; // balance / 100 = true balance
     private static final double MARKUP = 0.3; // markup percentage for profits
+    public static final String[] productTypes = {
+            "Fruit",
+            "Meat"
+    };
 
     public Store(String name){
         this.name = name;
@@ -170,35 +174,34 @@ public class Store {
                     wholesale, getMarkupPrice(product), product.getQuantity());
         }
 
-        UI.listerator("\n~ List of Produce ~", produceInfo);
+        System.out.println("\n~ List of Produce ~");
+        UI.listerator(produceInfo);
     }
 
     public void addNewItem(){
         System.out.println("\nWhat type of produce are you adding? ");
-        System.out.println("Type: ");
-        System.out.println("\t1. Fruit");
-        System.out.println("\t2. Meat");
-        System.out.print("choice: ");
-        int type = Input.getInt(1,2);
+        UI.listerator(productTypes);
+        System.out.print("type ");
+        int type = Input.getInt(1, productTypes.length);
 
-        System.out.println("\nEnter product name");
-        System.out.print("product: ");
+        System.out.println("\nEnter product name:");
+        System.out.print("name ");
         String name = Input.getString();
 
-        System.out.println("Enter product price");
-        System.out.print("price: ");
+        System.out.println("Enter product price:");
+        System.out.print("price ");
         double price = Input.getDouble(0);
 
         System.out.println("\nEnter quantity to add:");
-        System.out.print("quantity: ");
+        System.out.print("quantity ");
         int quantity = Input.getInt(1);
 
         System.out.println("\nPlease enter thr product's expiration date");
-        System.out.print("Year (yyyy): ");
+        System.out.print("Year (yyyy) ");
         String year = Input.getString();
-        System.out.print("Month (MM): ");
+        System.out.print("Month (MM) ");
         String month = Input.getString();
-        System.out.print("Day (dd): ");
+        System.out.print("Day (dd) ");
         String day = Input.getString();
 
         String useBy = String.format("%s-%s-%s", year, month, day);
