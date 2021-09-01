@@ -6,7 +6,7 @@ public abstract class Product implements Serializable {
     public final String name;
     public final int price;
     public final String useBy;
-    private int quantity; // TODO: remember to get wholesale
+    protected int quantity; // TODO: remember to get wholesale
 
     public Product(String name, int price, String useBy){
         this.name = name;
@@ -32,5 +32,10 @@ public abstract class Product implements Serializable {
 
     public String getFormattedPrice(){
         return String.format("%,.2f", (double) price / 100);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, $%.2f, %d ct", name, (double)price / 100, quantity);
     }
 }
