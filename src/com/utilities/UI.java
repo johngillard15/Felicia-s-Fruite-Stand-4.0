@@ -7,11 +7,11 @@ public class UI { // TODO: make different listing methods (bullet points, letter
     }
 
     /**
-     * <p>1 = number, 2 = letter</p>
-     * <p>subLevel refers to the level of indentation before each list element</p>
-     * @param listType
-     * @param subLevel
-     * @param listElements
+     * <p></p>
+     *
+     * @param listType the kind of list to create (1 - number, 2 - letter)
+     * @param subLevel level of indentation to apply to the list
+     * @param listElements the information to listerate
      */
     public static void listerator(int listType, int subLevel, String... listElements){
         String subLevelIndent = "";
