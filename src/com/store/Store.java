@@ -178,57 +178,6 @@ public class Store {
         UI.listerator(produceInfo);
     }
 
-    public void addNewItem(){
-        System.out.println("\nWhat type of produce are you adding? ");
-        UI.listerator(productTypes);
-        System.out.print("type ");
-        int type = Input.getInt(1, productTypes.length);
-
-        System.out.println("\nEnter product name:");
-        System.out.print("name ");
-        String name = Input.getString();
-
-        System.out.println("Enter product price:");
-        System.out.print("price ");
-        double price = Input.getDouble(0);
-
-        System.out.println("\nEnter quantity to add:");
-        System.out.print("quantity ");
-        int quantity = Input.getInt(1);
-
-        System.out.println("\nPlease enter thr product's expiration date");
-        System.out.print("Year (yyyy) ");
-        String year = Input.getString();
-        System.out.print("Month (MM) ");
-        String month = Input.getString();
-        System.out.print("Day (dd) ");
-        String day = Input.getString();
-
-        String useBy = String.format("%s-%s-%s", year, month, day);
-
-        switch(type){
-            case 1 -> {
-                System.out.printf("\nIs \"%s\" in season?\n", name);
-                UI.listerator("In season", "Not in season");
-                System.out.print("choice ");
-                boolean inSeason = Input.getInt(1,2) == 1;
-                addProduct(new Fruit(name, (int) (price * 100), useBy, quantity, inSeason));
-            }
-
-            case 2 -> {
-                System.out.printf("Is %s frozen?\n", name);
-                UI.listerator("Frozen", "Fresh");
-                System.out.print("choice ");
-                boolean isFrozen = Input.getInt(1, 2) == 1;
-                addProduct(new Meat(name, (int) (price * 100), useBy, quantity, isFrozen));
-            }
-        }
-
-        Product product = produce.get(produce.size() - 1);
-
-        System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
-    }
-
     private void decreaseStock(Product product){
         decreaseStock(product, 1);
     }

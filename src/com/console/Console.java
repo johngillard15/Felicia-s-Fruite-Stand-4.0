@@ -1,8 +1,9 @@
 package com.console;
 
+import com.product.Fruit;
+import com.product.Meat;
 import com.product.Product;
 import com.store.Store;
-import com.utilities.ANSI;
 import com.utilities.CLI;
 import com.utilities.Input;
 import com.utilities.UI;
@@ -14,7 +15,7 @@ import java.time.format.FormatStyle;
 public class Console {
     private final Store store;
     public static final LocalDate todaysDate = LocalDate.now();
-    public static final String[] consoleOptions = {
+    public static final String[] CONSOLE_OPTIONS = {
             "CHECK INVENTORY",
             "SHOW STORE BALANCE",
             "ADD PRODUCT",
@@ -43,10 +44,10 @@ public class Console {
             String formattedDate = todaysDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
             System.out.printf("Today's date is %s\n", formattedDate);
 
-            UI.listerator(consoleOptions);
+            UI.listerator(CONSOLE_OPTIONS);
 
             System.out.print("choice: ");
-            switch(Input.getInt(1, consoleOptions.length)){
+            switch(Input.getInt(1, CONSOLE_OPTIONS.length)){
                 case 1 -> viewProduce();
                 case 2 -> showStoreBalance();
                 case 3 -> addProduct();
@@ -87,8 +88,59 @@ public class Console {
         }
     }
 
-    private void addProduct(){
-        store.addNewItem();
+    public void addProduct(){
+        System.out.println("\nWhat type of produce are you adding? ");
+        UI.listerator(Store.productTypes);
+        System.out.print("type ");
+        int type = Input.getInt(1, Store.productTypes.length);
+
+        System.out.println("\nEnter product name:");
+        System.out.print("name ");
+        String name = Input.getString();
+
+        System.out.println("Enter product price:");
+        System.out.print("price ");
+        double price = Input.getDouble(0);
+
+        System.out.println("\nEnter quantity to add:");
+        System.out.print("quantity ");
+        int quantity = Input.getInt(1);
+
+        System.out.println("\nPlease enter thr product's expiration date");
+        System.out.print("Year (yyyy) ");
+        String year = Input.getString();
+        System.out.print("Month (MM) ");
+        String month = Input.getString();
+        System.out.print("Day (dd) ");
+        String day = Input.getString();
+
+        String useBy = String.format("%s-%s-%s", year, month, day);
+
+        Product product = switch(type){
+            case 1 -> {
+                System.out.printf("\nIs \"%s\" in season?\n", name);
+                UI.listerator("In season", "Not in season");
+                System.out.print("choice ");
+                boolean inSeason = Input.getInt(1,2) == 1;
+
+                yield new Fruit(name, (int) (price * 100), useBy, quantity, inSeason);
+            }
+
+            case 2 -> {
+                System.out.printf("Is %s frozen?\n", name);
+                UI.listerator("Frozen", "Fresh");
+                System.out.print("choice ");
+                boolean isFrozen = Input.getInt(1, 2) == 1;
+
+                yield new Meat(name, (int) (price * 100), useBy, quantity, isFrozen);
+            }
+
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        };
+
+        store.addProduct(product);
+
+        System.out.printf("\n%s successfully added for $%s.\n", product.name, product.getFormattedPrice());
     }
 
     private void sellProduct(){
