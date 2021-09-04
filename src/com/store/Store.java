@@ -1,11 +1,8 @@
 package com.store;
 
-import com.product.Fruit;
-import com.product.Meat;
 import com.product.Product;
 import com.utilities.ANSI;
 import com.utilities.FileHandling;
-import com.utilities.Input;
 import com.utilities.UI;
 
 import java.io.File;
@@ -13,7 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 // TODO: finish getting selling large quantities
 // TODO: justify list output based on length of name
