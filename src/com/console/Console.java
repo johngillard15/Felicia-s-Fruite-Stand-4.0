@@ -121,7 +121,7 @@ public class Console {
                 System.out.printf("\nIs \"%s\" in season?\n", name);
                 UI.listerator("In season", "Not in season");
                 System.out.print("choice ");
-                boolean inSeason = Input.getInt(1,2) == 1;
+                boolean inSeason = Input.getBoolean("1", "2");
 
                 yield new Fruit(name, (int) (price * 100), useBy, quantity, inSeason);
             }
@@ -130,7 +130,7 @@ public class Console {
                 System.out.printf("Is %s frozen?\n", name);
                 UI.listerator("Frozen", "Fresh");
                 System.out.print("choice ");
-                boolean isFrozen = Input.getInt(1, 2) == 1;
+                boolean isFrozen = Input.getBoolean("1", "2");
 
                 yield new Meat(name, (int) (price * 100), useBy, quantity, isFrozen);
             }
