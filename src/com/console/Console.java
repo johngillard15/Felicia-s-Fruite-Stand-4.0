@@ -15,7 +15,7 @@ import java.time.format.FormatStyle;
 public class Console {
     private final Store store;
     public static final LocalDate todaysDate = LocalDate.now();
-    public static final String[] CONSOLE_OPTIONS = {
+    private static final String[] CONSOLE_OPTIONS = {
             "CHECK INVENTORY",
             "SHOW STORE BALANCE",
             "ADD PRODUCT",
