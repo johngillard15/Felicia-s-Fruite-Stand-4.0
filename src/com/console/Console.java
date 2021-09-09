@@ -164,7 +164,6 @@ public class Console {
         showStoreBalance();
     }
 
-    // (maybe?) iterate through produce and discard expired products
     private void shrinkInventory(){
         viewProduce();
 
