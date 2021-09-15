@@ -125,10 +125,10 @@ public class Store {
         int salePrice = (int) ((double)product.price * MARKUP) + product.price;
         deposit(salePrice * saleQuantity);
 
-        if(product.getQuantity() == 1)
+        decreaseStock(product, saleQuantity);
+
+        if(product.getQuantity() <= 0)
             produce.remove(product);
-        else
-            decreaseStock(product, saleQuantity);
     }
 
     public double getMarkupPrice(Product product){
